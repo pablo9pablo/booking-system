@@ -14,22 +14,18 @@ public class BookingController {
     private BookingRepository bookingRepository;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate; // El cartero de RabbitMQ
+    private RabbitTemplate rabbitTemplate; // para enviar mensajes
 
-    // 1. Ver todas las reservas (GET)
-    // Esto cumple el servicio "Realtime Resource Availability"
+    // Para ver el estado actual de las reservas
     @GetMapping("/bookings")
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
 
-    // 2. Crear reserva (POST)
-    // Esto cumple "Resource Reservation" y activa el "Messaging Service"
+    // gestiona conflictos y crea la reserva
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
-
-        // A. Lógica de Negocio: Evitar conflictos (Locking)
-        // Busca si ya hay alguien en esa sala a esa hora
+        // Mira si la sala esta libre
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 newBooking.getResourceName(),
                 newBooking.getStartTime(),
@@ -37,17 +33,14 @@ public class BookingController {
         );
 
         if (!conflicts.isEmpty()) {
-            return "❌ ERROR: ¡Esa sala ya está ocupada en ese horario!";
+            return "ERROR: The room is reserved for that time";
         }
 
-        // B. Guardar en Base de Datos (DBaaS)
         bookingRepository.save(newBooking);
 
-        // C. Enviar mensaje a la cola (Messaging Service)
-        // El Worker escuchará esto y "enviará el email"
         String mensaje = "Nueva reserva confirmada para: " + newBooking.getUserEmail();
         rabbitTemplate.convertAndSend("emails", mensaje);
 
-        return "✅ ÉXITO: Reserva guardada y notificación enviada a la cola.";
+        return "Succesfull reserve";
     }
 }

@@ -12,7 +12,6 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	// ESTO CREA EL BUZÓN AUTOMÁTICAMENTE
 	@Bean
 	public Queue myQueue() {
 		return new Queue("emails", false);
