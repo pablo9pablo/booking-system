@@ -1,4 +1,4 @@
-package PabloMartinez.demo;
+package resourcebooking.demo;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
