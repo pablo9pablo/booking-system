@@ -43,4 +43,14 @@ public class BookingController {
 
         return "Succesfull reserve";
     }
+
+    // [SERVICE 14] Resource Reservation (Cancelación)
+    @DeleteMapping("/book/{id}")
+    public String cancelBooking(@PathVariable Long id) {
+        if (!bookingRepository.existsById(id)) {
+            return "ERROR: Reserve doesn't exist with ID: " + id;
+        }
+        bookingRepository.deleteById(id);
+        return "Reserve" + id + " succesfully cancelled.";
+    }
 }
