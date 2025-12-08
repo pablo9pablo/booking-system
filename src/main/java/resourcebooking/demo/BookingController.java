@@ -29,12 +29,10 @@ public class BookingController {
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
 
-        // 1. VALIDACIÓN LÓGICA (Lo que faltaba)
         if (newBooking.getEndTime().isBefore(newBooking.getStartTime())) {
             return "ERROR: End date cannot be before start date.";
         }
 
-        // 2. VALIDACIÓN DE CONFLICTOS (Lo que ya tenías)
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 newBooking.getResourceName(),
                 newBooking.getStartTime(),
@@ -42,7 +40,7 @@ public class BookingController {
         );
 
         if (!conflicts.isEmpty()) {
-            return "ERROR: The room is reserved for that time";
+            return "ERROR: The room is already reserved for that time.";
         }
 
         // 3. GUARDAR
@@ -63,7 +61,7 @@ public class BookingController {
         return "Reserve" + id + " succesfully cancelled.";
     }
 
-    @DeleteMapping("/deleteBookings")
+    @DeleteMapping("/bookings")
     public String deleteAllBookings() {
         bookingRepository.deleteAll();
         return "All bookings deleted";
