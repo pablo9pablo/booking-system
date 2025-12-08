@@ -13,4 +13,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findConflictingBookings(@Param("resource") String resource,
                                           @Param("start") LocalDateTime start,
                                           @Param("end") LocalDateTime end);
+
+    List<Booking> findByUserEmail(String userEmail);
+    List<Booking> findByUserEmailAndResourceName(String userEmail, String resourceName);
 }

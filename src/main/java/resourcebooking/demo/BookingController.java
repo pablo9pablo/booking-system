@@ -28,7 +28,13 @@ public class BookingController {
     // gestiona conflictos y crea la reserva
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
-        // Mira si la sala esta libre
+
+        // 1. VALIDACIÓN LÓGICA (Lo que faltaba)
+        if (newBooking.getEndTime().isBefore(newBooking.getStartTime())) {
+            return "ERROR: End date cannot be before start date.";
+        }
+
+        // 2. VALIDACIÓN DE CONFLICTOS (Lo que ya tenías)
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 newBooking.getResourceName(),
                 newBooking.getStartTime(),
@@ -39,6 +45,7 @@ public class BookingController {
             return "ERROR: The room is reserved for that time";
         }
 
+        // 3. GUARDAR
         bookingRepository.save(newBooking);
 
         String mensaje = "Nueva reserva confirmada para: " + newBooking.getUserEmail();
@@ -47,7 +54,6 @@ public class BookingController {
         return "Succesfull reserve";
     }
 
-    // [SERVICE 14] Resource Reservation (Cancelación)
     @DeleteMapping("/book/{id}")
     public String cancelBooking(@PathVariable Long id) {
         if (!bookingRepository.existsById(id)) {
@@ -56,4 +62,9 @@ public class BookingController {
         bookingRepository.deleteById(id);
         return "Reserve" + id + " succesfully cancelled.";
     }
-}
+
+    @DeleteMapping("/bookings")
+    public String deleteAllBookings() {
+        bookingRepository.deleteAll();
+        return "All bookings deleted";
+    }}
