@@ -1,4 +1,5 @@
 package resourcebooking.demo;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class BookingController {
     }
 
     // gestiona conflictos y crea la reserva
+    @Transactional
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
 
