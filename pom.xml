@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0</version>
+		<version>3.3.4</version>
 		<relativePath/>
 	</parent>
 
@@ -20,7 +20,6 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<finalName>${project.artifactId}-${project.version}</finalName>
 	</properties>
 
 	<dependencies>
@@ -65,23 +64,11 @@
 	</dependencies>
 
 	<build>
-		<finalName>${finalName}</finalName>
-
 		<plugins>
-			<!-- ESTE ES EL PLUGIN CLAVE - OBLIGATORIO PARA HEROKU -->
+			<!-- Plugin clave para generar el JAR ejecutable -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${project.parent.version}</version>
-				<configuration>
-					<mainClass>resourcebooking.demo.DemoApplication</mainClass>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
 				<executions>
 					<execution>
 						<goals>
