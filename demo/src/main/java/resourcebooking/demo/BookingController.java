@@ -18,23 +18,17 @@ public class BookingController {
 
     // Para ver el estado actual de las reservas
     @GetMapping("/bookings")
-    public Object getAllBookings() {
-        List<Booking> lista = bookingRepository.findAll();
-        if (lista.isEmpty()) {
-            return "Booking list is empty";
+    public List<Booking> getAllBookings() {
+        if(bookingRepository.findAll().isEmpty()){
+            System.out.println("No bookings found");
         }
-
-        return lista;
+        return bookingRepository.findAll();
     }
 
     // gestiona conflictos y crea la reserva
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
         // Mira si la sala esta libre
-        if (newBooking.getEndTime().isBefore(newBooking.getStartTime())) {
-            return "ERROR: End date is before start date.";
-        }
-
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 newBooking.getResourceName(),
                 newBooking.getStartTime(),
@@ -46,12 +40,14 @@ public class BookingController {
         }
 
         bookingRepository.save(newBooking);
-        String mensaje = "NEw booking confirmed for: " + newBooking.getUserEmail();
+
+        String mensaje = "Nueva reserva confirmada para: " + newBooking.getUserEmail();
         rabbitTemplate.convertAndSend("emails", mensaje);
 
         return "Succesfull reserve";
     }
 
+    // [SERVICE 14] Resource Reservation (Cancelación)
     @DeleteMapping("/book/{id}")
     public String cancelBooking(@PathVariable Long id) {
         if (!bookingRepository.existsById(id)) {
@@ -60,6 +56,4 @@ public class BookingController {
         bookingRepository.deleteById(id);
         return "Reserve" + id + " succesfully cancelled.";
     }
-
-    
 }
