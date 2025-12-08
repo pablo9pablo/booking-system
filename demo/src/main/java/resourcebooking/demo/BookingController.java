@@ -61,9 +61,5 @@ public class BookingController {
         return "Reserve" + id + " succesfully cancelled.";
     }
 
-    @DeleteMapping("/bookings")
-    public String deleteAllBookings() {
-        bookingRepository.deleteAll();
-        return "All reserves were deleted.";
-    }
+    
 }
