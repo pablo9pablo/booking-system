@@ -65,7 +65,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>app</finalName>
 		<plugins>
 			<!-- Plugin clave para generar el JAR ejecutable -->
 			<plugin>
