@@ -18,7 +18,13 @@ public class BookingController {
     private RabbitTemplate rabbitTemplate; // para enviar mensajes
 
     // Para ver el estado actual de las reservas
-
+    @GetMapping("/bookings")
+    public List<Booking> getAllBookings() {
+        if(bookingRepository.findAll().isEmpty()){
+            System.out.println("No bookings found");
+        }
+        return bookingRepository.findAll();
+    }
 
     // gestiona conflictos y crea la reserva
     @Transactional
@@ -62,11 +68,4 @@ public class BookingController {
         bookingRepository.deleteAll();
         return "All bookings deleted";
     }
-
-    @GetMapping("/bookings")
-    public List<Booking> getAllBookings() {
-        System.out.println("DEBUG-HEROKU-VERSION-14");
-        return bookingRepository.findAll();
-    }
-
 }
