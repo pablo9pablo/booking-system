@@ -4,6 +4,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
 
@@ -48,7 +53,7 @@ public class BookingController {
         // 3. GUARDAR
         bookingRepository.save(newBooking);
 
-        String mensaje = "Nueva reserva confirmada para: " + newBooking.getUserEmail();
+        String mensaje = "New confirmed reserve for : " + newBooking.getUserEmail();
         rabbitTemplate.convertAndSend("emails", mensaje);
 
         return "Succesfull reserve";
@@ -68,4 +73,53 @@ public class BookingController {
         bookingRepository.deleteAll();
         return "All bookings deletedd";
     }
+
+    @GetMapping("/stats")
+    public Map<String, Object> getStats() {
+        long total = bookingRepository.count();
+
+        Map<String, Long> bookingsPerResource = new HashMap<>();
+        for (Object[] row : bookingRepository.countBookingsByResource()) {
+            String resource = (String) row[0];
+            Long count = (Long) row[1];
+            bookingsPerResource.put(resource, count);
+        }
+
+        Booking last = bookingRepository.findTopByOrderByEndTimeDesc();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalBookings", total);
+        response.put("bookingsPerResource", bookingsPerResource);
+        if (last != null) {
+            response.put("lastBookingEndTime", last.getEndTime());
+            response.put("lastBookingResource", last.getResourceName());
+        }
+
+        return response;
+    }
+
+    // /api/bookings/byUser?userEmail=vip@test.com
+    @GetMapping("/bookings/byUser")
+    public List<Booking> getBookingsByUser(@RequestParam String userEmail) {
+        return bookingRepository.findByUserEmail(userEmail);
+    }
+
+    // /api/bookings/byResource?resourceName=Sala%20VIPP
+    @GetMapping("/bookings/byResource")
+    public List<Booking> getBookingsByResource(@RequestParam String resourceName) {
+        return bookingRepository.findByResourceName(resourceName);
+    }
+
+    // /api/bookings/byDay?date=2025-12-11
+    @GetMapping("/bookings/byDay")
+    public List<Booking> getBookingsByDay(
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1);
+
+        return bookingRepository.findByDay(startOfDay, endOfDay);
+    }
+
 }

@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e27dbcea-78ad-41a9-900e-084e647bc593" name="Changes" comment="sfsf" />
+    <list default="true" id="e27dbcea-78ad-41a9-900e-084e647bc593" name="Changes" comment="sfsf">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/app.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/app.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/resourcebooking/demo/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/resourcebooking/demo/BookingController.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,6 +100,7 @@
       <updated>1765192665714</updated>
       <workItem from="1765192667958" duration="3738000" />
       <workItem from="1765207765953" duration="12078000" />
+      <workItem from="1765446783284" duration="2078000" />
     </task>
     <task id="LOCAL-00001" summary="sfsf">
       <option name="closed" value="true" />
