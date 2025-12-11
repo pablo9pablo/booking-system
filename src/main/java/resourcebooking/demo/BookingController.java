@@ -66,6 +66,6 @@ public class BookingController {
     @DeleteMapping("/bookings")
     public String deleteAllBookings() {
         bookingRepository.deleteAll();
-        return "All bookings deleted";
+        return "All bookings deletedd";
     }
 }
