@@ -76,27 +76,28 @@ public class BookingController {
 
     @GetMapping("/stats")
     public Map<String, Object> getStats() {
-        // Mapa principal de respuesta
+
         Map<String, Object> stats = new HashMap<>();
 
         // 1. Total de reservas
-        long total = bookingRepository.count();
-        stats.put("totalBookings", total);
+        stats.put("totalBookings", bookingRepository.count());
 
-        // 2. Última reserva (por fecha de fin)
+        // 2. Última reserva (según endTime)
         Booking last = bookingRepository.findTopByOrderByEndTimeDesc();
         if (last != null) {
             stats.put("lastBookingResource", last.getResourceName());
             stats.put("lastBookingEndTime", last.getEndTime());
         }
 
-        // 3. Número de reservas por recurso
-        Map<String, Long> perResource = new HashMap<>();
-        for (Booking b : bookingRepository.findAll()) {
-            String resource = b.getResourceName();
-            perResource.put(resource, perResource.getOrDefault(resource, 0L) + 1);
+        // 3. Número de reservas por recurso (usando la QUERY JPQL)
+        Map<String, Long> bookingsPerResource = new HashMap<>();
+        for (Object[] row : bookingRepository.countBookingsByResource()) {
+            String resource = (String) row[0];
+            Long count = (Long) row[1];
+            bookingsPerResource.put(resource, count);
         }
-        stats.put("bookingsPerResource", perResource);
+
+        stats.put("bookingsPerResource", bookingsPerResource);
 
         return stats;
     }

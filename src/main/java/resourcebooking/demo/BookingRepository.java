@@ -15,18 +15,12 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                           @Param("end") LocalDateTime end);
 
     List<Booking> findByUserEmail(String userEmail);
-    List<Booking> findByUserEmailAndResourceName(String userEmail, String resourceName);
-    // NUEVO:
     List<Booking> findByResourceName(String resourceName);
-
     @Query("SELECT b FROM Booking b WHERE b.startTime >= :startOfDay AND b.startTime < :endOfDay")
     List<Booking> findByDay(@Param("startOfDay") LocalDateTime startOfDay,
                             @Param("endOfDay") LocalDateTime endOfDay);
 
-    // NUEVO: nº de reservas por recurso
     @Query("SELECT b.resourceName, COUNT(b) FROM Booking b GROUP BY b.resourceName")
     List<Object[]> countBookingsByResource();
-
-    // NUEVO: última reserva registrada
     Booking findTopByOrderByEndTimeDesc();
 }
