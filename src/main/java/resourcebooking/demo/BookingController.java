@@ -74,6 +74,7 @@ public class BookingController {
     @Cacheable(value = "stats", key = "'global'")
     @GetMapping("/stats")
     public Map<String, Object> getStats() {
+        System.out.println("STATS CALCULATED (DB query executed)");
 
         Map<String, Object> stats = new HashMap<>();
 
