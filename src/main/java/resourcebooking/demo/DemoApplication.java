@@ -1,4 +1,6 @@
 package resourcebooking.demo;
+import org.springframework.cache.annotation.EnableCaching;
+
 
 import org.springframework.amqp.core.Queue; // <--- IMPORT NUEVO
 import org.springframework.boot.SpringApplication;

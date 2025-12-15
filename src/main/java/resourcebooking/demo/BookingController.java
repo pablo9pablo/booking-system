@@ -1,5 +1,6 @@
 package resourcebooking.demo;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.cache.annotation.Cacheable;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +40,14 @@ public class BookingController {
         if (newBooking.getEndTime().isBefore(newBooking.getStartTime())) {
             return "ERROR: End date cannot be before start date.";
         }
-
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 newBooking.getResourceName(),
                 newBooking.getStartTime(),
                 newBooking.getEndTime()
         );
-
         if (!conflicts.isEmpty()) {
             return "ERROR: The room is already reserved for that time.";
         }
-
-        // 3. GUARDAR
         bookingRepository.save(newBooking);
 
         String mensaje = "New confirmed reserve for : " + newBooking.getUserEmail();
@@ -74,22 +71,20 @@ public class BookingController {
         return "All bookings deletedd";
     }
 
+    @Cacheable(value = "stats", key = "'global'")
     @GetMapping("/stats")
     public Map<String, Object> getStats() {
 
         Map<String, Object> stats = new HashMap<>();
 
-        // 1. Total de reservas
         stats.put("totalBookings", bookingRepository.count());
 
-        // 2. Última reserva (según endTime)
         Booking last = bookingRepository.findTopByOrderByEndTimeDesc();
         if (last != null) {
             stats.put("lastBookingResource", last.getResourceName());
             stats.put("lastBookingEndTime", last.getEndTime());
         }
 
-        // 3. Número de reservas por recurso (usando la QUERY JPQL)
         Map<String, Long> bookingsPerResource = new HashMap<>();
         for (Object[] row : bookingRepository.countBookingsByResource()) {
             String resource = (String) row[0];
@@ -101,21 +96,16 @@ public class BookingController {
 
         return stats;
     }
-
-
-    // /api/bookings/byUser?userEmail=vip@test.com
     @GetMapping("/bookings/byUser")
     public List<Booking> getBookingsByUser(@RequestParam String userEmail) {
         return bookingRepository.findByUserEmail(userEmail);
     }
 
-    // /api/bookings/byResource?resourceName=Sala%20VIPP
     @GetMapping("/bookings/byResource")
     public List<Booking> getBookingsByResource(@RequestParam String resourceName) {
         return bookingRepository.findByResourceName(resourceName);
     }
 
-    // /api/bookings/byDay?date=2025-12-11
     @GetMapping("/bookings/byDay")
     public List<Booking> getBookingsByDay(
             @RequestParam
