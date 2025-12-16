@@ -2,10 +2,10 @@ package resourcebooking.demo;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
+import java.io.Serializable; // <--- IMPORTANTE
 @Entity
 @Table(name = "bookings")
-public class Booking {
+public class Booking implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
