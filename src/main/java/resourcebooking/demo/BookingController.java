@@ -27,7 +27,9 @@ public class BookingController {
     @Cacheable("bookings_all")
     @GetMapping("/bookings")
     public List<Booking> getAllBookings() {
+        System.out.println("--- ⚠️ LLAMANDO A LA BASE DE DATOS (NO CACHÉ) ⚠️ ---");
         if(bookingRepository.findAll().isEmpty()){
+
             System.out.println("No bookings found");
         }
         return bookingRepository.findAll();
