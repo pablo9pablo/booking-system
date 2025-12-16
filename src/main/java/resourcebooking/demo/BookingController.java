@@ -11,36 +11,18 @@ import java.util.Map;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 
 @RestController
 @RequestMapping("/api")
 public class BookingController {
     @Autowired
-    private org.springframework.data.redis.core.StringRedisTemplate redisTemplate;
-    @Autowired
     private BookingRepository bookingRepository;
 
     @Autowired
     private RabbitTemplate rabbitTemplate; // para enviar mensajes
 //pireoroeo
-    @GetMapping("/redis-test")
-    public String testRedisConnection() {
-        try {
-            // 1. Intenta escribir en Redis
-            redisTemplate.opsForValue().set("prueba_conexion", "¡Hola Redis desde Heroku!");
 
-            // 2. Intenta leer de Redis
-            String valor = redisTemplate.opsForValue().get("prueba_conexion");
-
-            // 3. Si llega aquí, todo funciona
-            return "ÉXITO0000: Redis responde correctamente. Valor recuperado: " + valor;
-        } catch (Exception e) {
-            // 4. Si falla, nos dirá el error exacto
-            return "ERROR GRAVE: No se pudo conectar a Redis. Causa: " + e.getMessage();
-        }
-    }
     // Para ver el estado actual de las reservas
     @GetMapping("/bookings")
     public List<Booking> getAllBookings() {
