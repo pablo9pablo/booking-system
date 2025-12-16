@@ -25,7 +25,7 @@ public class BookingController {
 
     @Autowired
     private RabbitTemplate rabbitTemplate; // para enviar mensajes
-
+//pireoroeo
     @GetMapping("/redis-test")
     public String testRedisConnection() {
         try {
