@@ -15,7 +15,7 @@ public class RedisConfig {
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
         return (builder) -> builder
-                .withCacheConfiguration("bookings_all",
+                .withCacheConfiguration("bookings_v2",
                         RedisCacheConfiguration.defaultCacheConfig()
                                 .entryTtl(Duration.ofMinutes(10)) // Tiempo de vida de la caché
                                 .disableCachingNullValues()

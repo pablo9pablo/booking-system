@@ -24,7 +24,7 @@ public class BookingController {
     private RabbitTemplate rabbitTemplate; // para enviar mensajes
 
     // Para ver el estado actual de las reservas
-    @Cacheable("bookings_all")
+    @Cacheable("bookings_v2")
     @GetMapping("/bookings")
     public List<Booking> getAllBookings() {
         System.out.println("--- ⚠️ LLAMANDO A LA BASE DE DATOS (NO CACHÉ) ⚠️ ---");
@@ -36,7 +36,7 @@ public class BookingController {
     }
 
     // gestiona conflictos y crea la reserva
-    @CacheEvict(value = "bookings_all", allEntries = true)
+    @CacheEvict(value = "bookings_v2", allEntries = true)
     @Transactional
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
@@ -59,7 +59,7 @@ public class BookingController {
 
         return "Succesfull reserve";
     }
-    @CacheEvict(value = "bookings_all", allEntries = true)
+    @CacheEvict(value = "bookings_v2", allEntries = true)
     @DeleteMapping("/book/{id}")
     public String cancelBooking(@PathVariable Long id) {
         if (!bookingRepository.existsById(id)) {
@@ -69,7 +69,7 @@ public class BookingController {
         return "Reserve" + id + " succesfully cancelled.";
     }
 
-    @CacheEvict(value = "bookings_all", allEntries = true)
+    @CacheEvict(value = "bookings_v2", allEntries = true)
     @DeleteMapping("/bookings")
     public String deleteAllBookings() {
         bookingRepository.deleteAll();
