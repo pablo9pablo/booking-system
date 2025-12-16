@@ -1,7 +1,6 @@
 package resourcebooking.demo;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,6 @@ public class BookingController {
         }
     }
     // Para ver el estado actual de las reservas
-    @Cacheable("bookings_v2")
     @GetMapping("/bookings")
     public List<Booking> getAllBookings() {
         System.out.println("--- ⚠️ LLAMANDO A LA BASE DE DATOS (NO CACHÉ) ⚠️ ---");
@@ -55,7 +53,6 @@ public class BookingController {
     }
 
     // gestiona conflictos y crea la reserva
-    @CacheEvict(value = "bookings_v2", allEntries = true)
     @Transactional
     @PostMapping("/book")
     public String createBooking(@RequestBody Booking newBooking) {
@@ -78,7 +75,6 @@ public class BookingController {
 
         return "Succesfull reserve";
     }
-    @CacheEvict(value = "bookings_v2", allEntries = true)
     @DeleteMapping("/book/{id}")
     public String cancelBooking(@PathVariable Long id) {
         if (!bookingRepository.existsById(id)) {
@@ -88,7 +84,6 @@ public class BookingController {
         return "Reserve" + id + " succesfully cancelled.";
     }
 
-    @CacheEvict(value = "bookings_v2", allEntries = true)
     @DeleteMapping("/bookings")
     public String deleteAllBookings() {
         bookingRepository.deleteAll();
