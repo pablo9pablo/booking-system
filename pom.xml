@@ -14,7 +14,7 @@
 
 	<groupId>PabloMartinez</groupId>
 	<artifactId>demo</artifactId>
-	<version>1.0.0</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Resource Booking System - Cloud Computing Project</description>
 	<packaging>jar</packaging>
