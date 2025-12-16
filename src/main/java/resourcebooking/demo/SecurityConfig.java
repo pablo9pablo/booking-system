@@ -18,14 +18,10 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // 1. REGLA DE ORO: El test de Redis es público (sin token)
-                        .requestMatchers("/api/redis-test").permitAll()
+                        .requestMatchers("/api/email-test").permitAll()
 
-                        // 2. El resto de GETs también públicos
+                        // Permitir todos los GETs (para ver bookings)
                         .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-
-                        // 3. Crear y borrar reservas requieren autenticación
-                        .requestMatchers(HttpMethod.POST, "/api/book").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/**").authenticated()
 
                         // 4. Cualquier otra cosa, cerrada
                         .anyRequest().authenticated()

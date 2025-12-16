@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e27dbcea-78ad-41a9-900e-084e647bc593" name="Changes" comment="sfsf">
-      <change afterPath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/resourcebooking/demo/RedisConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="e27dbcea-78ad-41a9-900e-084e647bc593" name="Changes" comment="sfsf" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +100,7 @@
       <workItem from="1765192667958" duration="3738000" />
       <workItem from="1765207765953" duration="12078000" />
       <workItem from="1765446783284" duration="13439000" />
-      <workItem from="1765819304914" duration="15198000" />
+      <workItem from="1765819304914" duration="15547000" />
     </task>
     <task id="LOCAL-00001" summary="sfsf">
       <option name="closed" value="true" />
