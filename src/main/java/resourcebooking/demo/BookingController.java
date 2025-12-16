@@ -23,6 +23,16 @@ public class BookingController {
     private RabbitTemplate rabbitTemplate; // para enviar mensajes
 //pireoroeo
 
+    // --- AÑADE ESTO PARA PROBAR EL EMAIL DIRECTAMENTE ---
+    @Autowired
+    private EmailService emailService; // Inyectamos el servicio aquí también
+
+    @GetMapping("/email-test")
+    public String testEmailManual() {
+        emailService.sendEmail("Prueba manual desde el Controller (sin RabbitMQ)");
+        return "Prueba de email enviada. Revisa Mailtrap.";
+    }
+
     // Para ver el estado actual de las reservas
     @GetMapping("/bookings")
     public List<Booking> getAllBookings() {
