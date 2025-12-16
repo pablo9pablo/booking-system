@@ -23,17 +23,7 @@ public class BookingController {
     @Autowired
     private RabbitTemplate rabbitTemplate; // para enviar mensajes
 
-    // Para ver el estado actual de las reservas
-    @Cacheable("bookings_v2")
-    @GetMapping("/bookings")
-    public List<Booking> getAllBookings() {
-        System.out.println("--- ⚠️ LLAMANDO A LA BASE DE DATOS (NO CACHÉ) ⚠️ ---");
-        if(bookingRepository.findAll().isEmpty()){
 
-            System.out.println("No bookings found");
-        }
-        return bookingRepository.findAll();
-    }
 
     // gestiona conflictos y crea la reserva
     @CacheEvict(value = "bookings_v2", allEntries = true)
