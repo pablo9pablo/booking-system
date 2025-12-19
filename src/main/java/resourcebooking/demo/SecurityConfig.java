@@ -13,21 +13,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // Desactivamos CSRF porque es una API REST (importante para POST/DELETE)
-                .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth -> auth
-                        // 1. REGLA DE ORO: El test de Redis es público (sin token)
-                        .requestMatchers("/api/email-test").permitAll()
-
-                        // Permitir todos los GETs (para ver bookings)
+                        // TODOS los GET bajo /api son públicos
                         .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-
-                        // 4. Cualquier otra cosa, cerrada
+                        // Crear y borrar reservas, autenticado
+                        .requestMatchers(HttpMethod.POST, "/api/book").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
+
 }
