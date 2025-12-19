@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e27dbcea-78ad-41a9-900e-084e647bc593" name="Changes" comment="sfsf">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/newrelic.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +104,7 @@
       <workItem from="1765192667958" duration="3738000" />
       <workItem from="1765207765953" duration="12078000" />
       <workItem from="1765446783284" duration="13439000" />
-      <workItem from="1765819304914" duration="21273000" />
+      <workItem from="1765819304914" duration="24392000" />
     </task>
     <task id="LOCAL-00001" summary="sfsf">
       <option name="closed" value="true" />
