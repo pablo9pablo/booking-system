@@ -18,11 +18,8 @@ public class Booking implements Serializable {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    // RELACIÓN NUEVA: Una reserva puede tener un Feedback asociado.
-    // "mappedBy" indica que la clave foránea está en la otra clase (Feedback).
-    // CascadeType.ALL permite que si borras la reserva, se borre su feedback.
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
-    @JsonIgnore // Evita que al pedir la reserva, intente pintar el feedback infinitamente
+    @JsonIgnore
     private Feedback feedback;
 
     // --- GETTERS Y SETTERS ---

@@ -14,9 +14,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // TODOS los GET bajo /api son públicos
                         .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                        // Crear y borrar reservas, autenticado
                         .requestMatchers(HttpMethod.POST, "/api/book").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/**").authenticated()
                         .anyRequest().authenticated()
